@@ -11,7 +11,7 @@ BEGIN
         FROM corrections
         WHERE corrections.user_id = user_id
     )
-    WHERE user.user_id = user_id;
+    WHERE user_id = user_id;
 
 END //
 
