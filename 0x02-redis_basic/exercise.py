@@ -13,7 +13,7 @@ class Cache:
         Initialize the Redis client
         """
         self._redis = redis.Redis()
-        self._redis.flushdb
+        self._redis.flushdb()
 
     def store(self, data: Union[str, float, int, bytes]) -> str:
         """
