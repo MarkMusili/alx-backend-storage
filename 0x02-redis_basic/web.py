@@ -9,7 +9,9 @@ r = Redis()
 
 
 def cache(func: Callable) -> Callable:
-    """ Decorator for get_url"""
+    """
+    Decorator for get_url
+    """
     @wraps(func)
     def wrapper(url):
         """
@@ -19,6 +21,9 @@ def cache(func: Callable) -> Callable:
         cache_key = f"cache:{url}"
         count_key = f"count:{url}"
 
+        # Increment the count
+        r.incr(count_key)
+        
         # Check if the URL is in the cache
         if r.exists(cache_key):
             # Increment the count
@@ -30,9 +35,6 @@ def cache(func: Callable) -> Callable:
 
         # Store the result in the cache with an expiration time of 10 seconds
         r.setex(cache_key, 10, result)
-
-        # Increment the count
-        r.incr(count_key)
 
         return result
 
