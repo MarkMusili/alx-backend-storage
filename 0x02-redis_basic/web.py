@@ -8,8 +8,12 @@ r = Redis()
 
 
 def cache(func):
+    """ Decorator for get_url"""
     @wraps(func)
     def wrapper(url):
+        """
+        Perform the caching
+        """
         # Construct the keys for the cache and count
         cache_key = f"cache:{url}"
         count_key = f"count:{url}"
