@@ -21,9 +21,9 @@ def cache(func: Callable) -> Callable:
         cache_key = f"cache:{url}"
         count_key = f"count:{url}"
 
-        # Increment the count
-        r.incr(count_key)
-        
+        if not r.exists(count_key):
+            r.set(count_key, 0)
+
         # Check if the URL is in the cache
         if r.exists(cache_key):
             # Increment the count
@@ -35,6 +35,8 @@ def cache(func: Callable) -> Callable:
 
         # Store the result in the cache with an expiration time of 10 seconds
         r.setex(cache_key, 10, result)
+
+        r.incr(count_key)
 
         return result
 
