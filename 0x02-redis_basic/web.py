@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """ Web cache module """
 import requests
+from typing import Callable
 from redis import Redis
 from functools import wraps
 
 r = Redis()
 
 
-def cache(func):
+def cache(func: Callable) -> Callable:
     """ Decorator for get_url"""
     @wraps(func)
     def wrapper(url):
